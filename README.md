@@ -50,11 +50,20 @@ Then you can use the network as usual.
 
 The hyperparameters are the following:
 
-- inputLayers: number of input neurons
-- outputLayers: number of output neurons
+- inputLayers: number of input neurons (fixed by your data)
+- outputLayers: number of output neurons (fixed by your data)
 - hiddenLayers: number of hidden neurons
 - batchSize: number of training samples per batch
 - trainingIterations: number of training iterations
 - learningRate: learning rate
 
+You need to tweak these parameters in order to get the best results. 
+
+You can use the file **HyperparametersTweaking.py** to find the best hyperparameters for your data.
+
+This file will generate a graph with the success rate of the network for each hyperparameters combination.
+
+Example of graph with the actual code with the xor algorithm:
+
+![img.png](Resources/chartHyperparameters.png)
 
