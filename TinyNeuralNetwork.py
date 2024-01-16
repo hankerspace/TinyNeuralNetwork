@@ -1,7 +1,6 @@
 import numpy as np
 
-
-class NeuralNetwork:
+class TinyNeuralNetwork:
     def __init__(self, input, output, hidden_layer_sizes=[], weights_biases=None):
         self.input = input  # number of input nodes + 1 for bias
         self.output = output  # number of output nodes
@@ -143,9 +142,13 @@ class NeuralNetwork:
                     error = np.einsum('jk,ik->ij', w, delta1)  # dot(w, delta1)
                     delta1 = a0 * (1.0 - a0) * error
 
-    def pickle(self):
+    def export_model(self):
         import pickle
-        return pickle.dumps(self)
+        dump = pickle.dumps(self)
+        import zlib
+        compressed_dump = zlib.compress(dump)
+        import base64
+        return base64.b64encode(compressed_dump)
 
     def info(self):
         print("layers:")
@@ -157,3 +160,11 @@ class NeuralNetwork:
         print("biases:")
         for b in self.biases:
             print(b)
+
+def import_model( model):
+    import pickle
+    import zlib
+    import base64
+    dump = base64.b64decode(model)
+    dump = zlib.decompress(dump)
+    return pickle.loads(dump)
