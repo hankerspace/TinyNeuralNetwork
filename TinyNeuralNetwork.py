@@ -105,9 +105,7 @@ class TinyNeuralNetwork:
         layers = self.layers
         weights_and_biases = self.weights_and_biases
         rev_weights_biases = self.rev_weights_biases
-        dot = np.dot
         exp = np.exp
-        outer_multiply = np.multiply.outer
 
         # loop
         for indx in range(num_training_iterations):
@@ -123,7 +121,7 @@ class TinyNeuralNetwork:
 
             for i, w, b in weights_and_biases:
                 sum = np.einsum('jk,ij->ik', w, a) + b  # np.matmul(a, w) + b
-                a = 1.0 / (1.0 + exp(-sum))
+                a = .5 * (1 + np.tanh(.5 * sum)) #1.0 / (1.0 + exp(-sum)) # To avoid overflow
                 layers[i + 1] = a
 
             # back propogate, vectorized over whole batch
@@ -141,6 +139,7 @@ class TinyNeuralNetwork:
                 if i:  # Skip delta on input nodes since we don't use it (and it is 0)
                     error = np.einsum('jk,ik->ij', w, delta1)  # dot(w, delta1)
                     delta1 = a0 * (1.0 - a0) * error
+
 
     def export_model(self):
         import pickle
