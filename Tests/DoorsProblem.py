@@ -44,7 +44,7 @@ test_data = random_dataset_of_doors(testCount)
 neural_network = tnn.TinyNeuralNetwork(8, 8, [20, 20])
 
 start_time = time.perf_counter()
-neural_network.train_in_batches(training_data, 256, 10000, 0.5)
+neural_network.train(training_data, 256, 10000, 0.5)
 print("Training took: ", time.perf_counter() - start_time)
 
 

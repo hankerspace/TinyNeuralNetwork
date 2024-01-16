@@ -13,7 +13,7 @@ learning_rate = 0.5
 for batch_size in (32, 64, 128, 256, 512):
     for num_traning_iterations in (500, 1000, 2000, 5000, 10000, 20000):
         neural_network = tnn.TinyNeuralNetwork(4, 1, [20, 20])
-        neural_network.train_in_batches(training_data, batch_size, num_traning_iterations, learning_rate)
+        neural_network.train(training_data, batch_size, num_traning_iterations, learning_rate)
         testResults = []
         for i in range(testCount):
             output = neural_network.get_output(test_data[i][0])

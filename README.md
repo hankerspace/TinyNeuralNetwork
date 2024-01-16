@@ -11,7 +11,7 @@ import TinyNeuralNetwork as tnn
 
 neural_network = tnn.TinyNeuralNetwork(inputLayers, outputLayers, hiddenLayers)
 # first, train the network
-neural_network.train_in_batches(training_data, batchSize, trainingIterations, learningRate)
+neural_network.train(training_data, batchSize, trainingIterations, learningRate)
 # then, use the network
 output = neural_network.get_output(test_data)
 ```

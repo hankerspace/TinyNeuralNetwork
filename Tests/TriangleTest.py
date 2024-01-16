@@ -38,7 +38,7 @@ neural_network = tnn.TinyNeuralNetwork(8, 1, [20, 20])
 
 print("Training...")
 start_time = time.perf_counter()
-neural_network.train_in_batches(training_data, 1024, 10000, 0.5)
+neural_network.train(training_data, 1024, 10000, 0.5)
 print("Training took: ", time.perf_counter() - start_time)
 
 

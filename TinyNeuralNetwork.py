@@ -52,50 +52,8 @@ class TinyNeuralNetwork:
                 error = np.dot(w, delta1)
                 delta1 = a0 * (1.0 - a0) * error
 
-    def train_once(self, training_input, expected_output, learning_rate=.5):
-        self.get_output(training_input)
-        self.backpropagation(expected_output, learning_rate)
 
-    def train(self, training_data, num_training_iterations, learning_rate):
-        # clean data
-        training_data = [(np.array(i), np.array(o)) for i, o in training_data]
-
-        # make functions local
-        layers = self.layers
-        weights_and_biases = self.weights_and_biases
-        rev_weights_biases = self.rev_weights_biases
-        dot = np.dot
-        exp = np.exp
-        outer_multiply = np.multiply.outer
-
-        # loop
-        for _ in range(num_training_iterations):
-            for training_input, expected_output in training_data:
-                # feed forward
-                a = training_input
-                layers[0] = a
-
-                for i, w, b in weights_and_biases:
-                    sum = dot(w.T, a) + b
-                    a = 1.0 / (1.0 + exp(-sum))
-                    layers[i + 1] = a
-
-                # back propogate
-                out = layers[-1]
-                error = -(expected_output - out)
-                delta1 = out * (1.0 - out) * error
-
-                for i, w, b in rev_weights_biases:
-                    a0 = layers[i]
-                    change_w = outer_multiply(a0, delta1)
-                    w -= learning_rate * change_w  # changes w in place
-                    b -= learning_rate * delta1  # changes b in place
-
-                    if i:  # Skip delta on input nodes since we don't use it (and it is 0)
-                        error = dot(w, delta1)
-                        delta1 = a0 * (1.0 - a0) * error
-
-    def train_in_batches(self, training_data, batch_size, num_training_iterations, learning_rate=.5):
+    def train(self, training_data, batch_size, num_training_iterations, learning_rate=.5):
         # clean data
         training_inputs = np.array([np.array(i) for i, o in training_data])
         training_outputs = np.array([np.array(o) for i, o in training_data])
@@ -105,7 +63,6 @@ class TinyNeuralNetwork:
         layers = self.layers
         weights_and_biases = self.weights_and_biases
         rev_weights_biases = self.rev_weights_biases
-        exp = np.exp
 
         # loop
         for indx in range(num_training_iterations):
