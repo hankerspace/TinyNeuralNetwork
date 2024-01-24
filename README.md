@@ -1,6 +1,10 @@
 # Tiny Neural Network
 
-This is a tiny neural network implementation in Python3/NumPy.
+<center><img alt="img.png" height="300" src="img.png" width="300"/></center>
+
+This is a tiny neural network implementation in Python3/NumPy. It is designed to be as simple as possible, while still being flexible enough to solve a wide range of problems. It is not optimized for speed or numerical precision, but instead to be easy to understand and hack.
+
+You can train a network using TensorFlow and use the TNN lib to make predictions.
 
 ## Usage
 
@@ -67,3 +71,24 @@ Example of graph with the actual code with the xor algorithm:
 
 ![img.png](Resources/chartHyperparameters.png)
 
+## TensorFlow training
+
+You can train your NN with TensorFlow and then export the model to use it with TNN.
+
+Example in the file **Example/TensorFlowExample.py**.
+
+You need to use only Sigmoïd activation function inside your TensorFlow model. Then, create a TNN model with the same number of layers and the same number of neurons per layer. Finally, copy the weights and biases from the TensorFlow model to the TNN model.
+
+```python
+# Export weights and biases from TensorFlow model
+weights = []
+biases = []
+for layer in model.layers:
+    weights.append(layer.get_weights()[0])
+    biases.append(layer.get_weights()[1])
+
+# Create TNN model with the same number of layers and the same number of neurons per layer, and insert the weights and biases
+tiny_neural_network = tnn.TinyNeuralNetwork(5, 1, [64, 32], (weights, biases))
+```
+
+You can then use the TNN model as usual.

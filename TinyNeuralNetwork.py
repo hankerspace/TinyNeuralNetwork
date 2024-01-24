@@ -1,7 +1,9 @@
 import numpy as np
 
 class TinyNeuralNetwork:
-    def __init__(self, input, output, hidden_layer_sizes=[], weights_biases=None):
+    def __init__(self, input, output, hidden_layer_sizes=None, weights_biases=None):
+        if hidden_layer_sizes is None:
+            hidden_layer_sizes = []
         self.input = input  # number of input nodes + 1 for bias
         self.output = output  # number of output nodes
 
